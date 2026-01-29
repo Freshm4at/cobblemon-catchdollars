@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "gain-cobbledollard-capture",
+  "version": "${version}",
+  "name": "Gain CobbleDollard Capture",
+  "description": "Gagnez des CobbleDollards en capturant des Pokémon!",
+  "authors": [
+    "freshmeat"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/gain-cobbledollard-capture/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "com.gaincobbledollard.GainCobbleDollardCapture"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "cobblemon": ">=1.7.0",
+    "cobbledollars": ">=2.0.0"
+  }
+}

@@ -36,11 +36,6 @@ data class ConfigData(
     // Language settings
     val language: String = "fr", // "fr" ou "en"
     
-    // Messages
-    val captureMessage: String = "§6Vous avez capturé %s et gagné %d CobbleDollards!",
-    val pokedexMessage: String = "§6Vous avez complété une entrée du Pokédex avec %s et gagné %d CobbleDollards!",
-    val victoryMessage: String = "§6Vous avez vaincu %s et gagné %d CobbleDollards!",
-    
     // Display settings
     val showCaptureTitle: Boolean = true,
     val showPokedexTitle: Boolean = true,

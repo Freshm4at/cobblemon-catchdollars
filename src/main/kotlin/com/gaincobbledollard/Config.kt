@@ -50,9 +50,9 @@ object Config {
     // Predefined messages by language
     private val messages = mapOf(
         "fr" to mapOf(
-            "capture" to "§6Vous avez capturé %s et gagné %d CobbleDollards!",
-            "pokedex" to "§6Vous avez complété une entrée du Pokédex avec %s et gagné %d CobbleDollards!",
-            "victory" to "§6Vous avez vaincu %s et gagné %d CobbleDollards!",
+            "capture" to "§6Vous avez capturé %s et gagné %d CobbleDollars!",
+            "pokedex" to "§6Vous avez complété une entrée du Pokédex avec %s et gagné %d CobbleDollars!",
+            "victory" to "§6Vous avez vaincu %s et gagné %d CobbleDollars!",
             "captured" to "capturé",
             "defeated" to "vaincu",
             "addedToPokedex" to "ajouté au pokédex",

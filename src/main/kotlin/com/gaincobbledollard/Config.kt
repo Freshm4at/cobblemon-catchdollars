@@ -42,7 +42,7 @@ object Config {
     var shinyMultiplier = 1.5
 
     // Victory rewards
-    var baseVictoryLevelMultiplier = 200.0
+    var baseVictoryLevelMultiplier = 50.0
     
     // Language settings
     var language = "fr" // "fr" ou "en"
@@ -83,7 +83,7 @@ object Config {
     fun load() {
         if (!CONFIG_FILE.exists()) {
             save()
-            GainCobbleDollardCapture.LOGGER.info("Fichier de configuration créé: ${CONFIG_FILE.absolutePath}")
+            GainCobbleDollardCapture.LOGGER.debug("Fichier de configuration créé: ${CONFIG_FILE.absolutePath}")
             return
         }
         
@@ -135,7 +135,7 @@ object Config {
                 }
             }
             
-            GainCobbleDollardCapture.LOGGER.info("Configuration chargée avec succès")
+            GainCobbleDollardCapture.LOGGER.debug("Configuration chargée avec succès")
         } catch (e: Exception) {
             GainCobbleDollardCapture.LOGGER.error("Erreur lors du chargement de la configuration: ${e.message}")
         }
@@ -191,7 +191,7 @@ object Config {
             FileWriter(CONFIG_FILE).use { writer ->
                 GSON.toJson(data, writer)
             }
-            GainCobbleDollardCapture.LOGGER.info("Configuration sauvegardée")
+            GainCobbleDollardCapture.LOGGER.debug("Configuration sauvegardée")
         } catch (e: Exception) {
             GainCobbleDollardCapture.LOGGER.error("Erreur lors de la sauvegarde de la configuration: ${e.message}")
         }

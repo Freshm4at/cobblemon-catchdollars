@@ -31,7 +31,7 @@ data class ConfigData(
     val shinyMultiplier: Double = 1.5,
 
     // Victory rewards
-    val baseVictoryLevelMultiplier: Double = 200.0,
+    val baseVictoryLevelMultiplier: Double = 50.0,
 
     // Language settings
     val language: String = "fr", // "fr" ou "en"

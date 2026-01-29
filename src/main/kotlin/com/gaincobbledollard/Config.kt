@@ -46,11 +46,6 @@ object Config {
     
     // Language settings
     var language = "fr" // "fr" ou "en"
-    
-    // Messages
-    var captureMessage = "§6Vous avez capturé %s et gagné %d CobbleDollards!"
-    var pokedexMessage = "§6Vous avez complété une entrée du Pokédex avec %s et gagné %d CobbleDollards!"
-    var victoryMessage = "§6Vous avez vaincu %s et gagné %d CobbleDollards!"
 
     // Predefined messages by language
     private val messages = mapOf(
@@ -132,11 +127,6 @@ object Config {
                     // Language
                     language = it.language
                     
-                    // Messages
-                    captureMessage = it.captureMessage
-                    pokedexMessage = it.pokedexMessage
-                    victoryMessage = it.victoryMessage
-                    
                     // Display settings
                     showCaptureTitle = it.showCaptureTitle
                     showPokedexTitle = it.showPokedexTitle
@@ -189,11 +179,6 @@ object Config {
             
             // Language
             language = language,
-            
-            // Messages
-            captureMessage = captureMessage,
-            pokedexMessage = pokedexMessage,
-            victoryMessage = victoryMessage,
             
             // Display settings
             showCaptureTitle = showCaptureTitle,

@@ -23,10 +23,10 @@ object CaptureListener {
     
     fun register() {
         
-        GainCobbleDollardCapture.LOGGER.debug("[Gain-cobbledollard] Tentative d'enregistrement de l'écouteur de capture...")
+        GainCobbleDollardCapture.LOGGER.debug("[CatchDollars] Tentative d'enregistrement de l'écouteur de capture...")
         
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.NORMAL) { event ->
-            GainCobbleDollardCapture.LOGGER.info("[Gain-cobbledollard] Événement POKEMON_CAPTURED reçu!")
+            GainCobbleDollardCapture.LOGGER.info("[CatchDollars] Événement POKEMON_CAPTURED reçu!")
             
             // Initialiser le cache au premier événement de capture
             if (!cacheInitialized) {
@@ -36,7 +36,7 @@ object CaptureListener {
             handleCapture(event.player, event.pokemon)
         }
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
-            GainCobbleDollardCapture.LOGGER.info("[Gain-cobbledollard] Événement BATTLE_VICTORY reçu!")
+            GainCobbleDollardCapture.LOGGER.info("[CatchDollars] Événement BATTLE_VICTORY reçu!")
             val server = Cobblemon.implementation.server()
            
             if(event.losers.first().type == ActorType.WILD && event.winners.first().type == ActorType.PLAYER) {
@@ -62,7 +62,7 @@ object CaptureListener {
 
         CobblemonEvents.POKEDEX_DATA_CHANGED_POST.subscribe(Priority.NORMAL) { event ->
             val server = Cobblemon.implementation.server()
-            GainCobbleDollardCapture.LOGGER.debug("[Gain-cobbledollard] Événement POKEDEX_DATA_CHANGED_POST reçu!")
+            GainCobbleDollardCapture.LOGGER.debug("[CatchDollars] Événement POKEDEX_DATA_CHANGED_POST reçu!")
             // Ne déclencher que si le statut "caught" vient de passer de false à true
             if (event.knowledge == PokedexEntryProgress.CAUGHT) {
                 val player = getPlayerByUUID(event.playerUUID, server)
@@ -70,7 +70,7 @@ object CaptureListener {
                 handlePokedexEntry(player, pokemon)
             } else {
                 GainCobbleDollardCapture.LOGGER.debug(
-                    "[Gain-cobbledollard] Pokédex changé mais pas une nouvelle capture - ignoré"
+                    "[CatchDollars] Pokédex changé mais pas une nouvelle capture - ignoré"
                 )
             }
         }
@@ -79,10 +79,10 @@ object CaptureListener {
 
     
     private fun handleCapture(player: ServerPlayerEntity?, pokemon: Pokemon?) {
-        GainCobbleDollardCapture.LOGGER.debug("[Gain-cobbledollard] Événement de capture détecté - Joueur: {}, Pokemon: {}", player?.name?.string, pokemon?.species?.name)
+        GainCobbleDollardCapture.LOGGER.debug("[CatchDollars] Événement de capture détecté - Joueur: {}, Pokemon: {}", player?.name?.string, pokemon?.species?.name)
         
         if (player == null || pokemon == null) {
-            GainCobbleDollardCapture.LOGGER.warn("[Gain-cobbledollard] Joueur ou Pokemon null - annulation")
+            GainCobbleDollardCapture.LOGGER.warn("[CatchDollars] Joueur ou Pokemon null - annulation")
             return
         }
         
@@ -105,7 +105,7 @@ object CaptureListener {
             if (Config.showCaptureChat) {
                 val message = try {
                     String.format(
-                        Config.captureMessage,
+                        Config.getMessage("capture"),
                         pokemon.species.name,
                         rewardInt
                     )
@@ -128,7 +128,7 @@ object CaptureListener {
                 title.append(Text.literal(" ✨ Shiny").formatted(Formatting.GOLD, Formatting.ITALIC))
             }
             
-            title.append(Text.literal(" lvl${pokemon.level} capturé").formatted(Formatting.GRAY))
+            title.append(Text.literal(" lvl${pokemon.level} ${Config.getMessage("captured")}").formatted(Formatting.GRAY))
             
             val subtitle = Text.literal("+$rewardInt CobbleDollards")
                 .formatted(Formatting.YELLOW)
@@ -157,10 +157,10 @@ object CaptureListener {
     }
 
     private fun handleVictory(player: ServerPlayerEntity?, pokemon: Pokemon?) {
-        GainCobbleDollardCapture.LOGGER.debug("[Gain-cobbledollard] Événement de victoire détecté - Joueur: {}, Pokemon: {}", player?.name?.string, pokemon?.species?.name)
+        GainCobbleDollardCapture.LOGGER.debug("[CatchDollars] Événement de victoire détecté - Joueur: {}, Pokemon: {}", player?.name?.string, pokemon?.species?.name)
         
         if (player == null || pokemon == null) {
-            GainCobbleDollardCapture.LOGGER.warn("[Gain-cobbledollard] Joueur ou Pokemon null - annulation")
+            GainCobbleDollardCapture.LOGGER.warn("[CatchDollars] Joueur ou Pokemon null - annulation")
             return
         }
         
@@ -183,7 +183,7 @@ object CaptureListener {
             if (Config.showCaptureChat) {
                 val message = try {
                     String.format(
-                        Config.victoryMessage,
+                        Config.getMessage("victory"),
                         pokemon.species.name,
                         rewardInt
                     )
@@ -206,7 +206,7 @@ object CaptureListener {
                 title.append(Text.literal(" ✨ Shiny").formatted(Formatting.GOLD, Formatting.ITALIC))
             }
             
-            title.append(Text.literal(" lvl${pokemon.level} vaincu").formatted(Formatting.GRAY))
+            title.append(Text.literal(" lvl${pokemon.level} ${Config.getMessage("defeated")}").formatted(Formatting.GRAY))
             
             val subtitle = Text.literal("+$rewardInt CobbleDollards")
                 .formatted(Formatting.YELLOW)
@@ -235,10 +235,10 @@ object CaptureListener {
     }
 
     private fun handlePokedexEntry(player: ServerPlayerEntity?, pokemon: Pokemon?) {
-        GainCobbleDollardCapture.LOGGER.debug("[Gain-cobbledollard] Événement de nouvelle entrée pokedex détecté - Joueur: {}, Pokemon: {}", player?.name?.string, pokemon?.species?.name)
+        GainCobbleDollardCapture.LOGGER.debug("[CatchDollars] Événement de nouvelle entrée pokedex détecté - Joueur: {}, Pokemon: {}", player?.name?.string, pokemon?.species?.name)
         
         if (player == null || pokemon == null) {
-            GainCobbleDollardCapture.LOGGER.warn("[Gain-cobbledollard] Joueur ou Pokemon null - annulation")
+            GainCobbleDollardCapture.LOGGER.warn("[CatchDollars] Joueur ou Pokemon null - annulation")
             return
         }
         
@@ -268,7 +268,7 @@ object CaptureListener {
             if (Config.showPokedexChat) {
                 val message = try {
                     String.format(
-                        Config.pokedexMessage,
+                        Config.getMessage("pokedex"),
                         pokemon.species.name,
                         rewardInt
                     )
@@ -334,7 +334,7 @@ object CaptureListener {
         val finalReward = kotlin.math.min(Config.maxReward, roundedReward)
         
         GainCobbleDollardCapture.LOGGER.debug(
-            "[Gain-cobbledollard] Calcul récompense - Pokemon: {}, Niveau: {}, Bucket: {}, Base: {}, Multiplicateur: {}, Final: {}",
+            "[CatchDollars] Calcul récompense - Pokemon: {}, Niveau: {}, Bucket: {}, Base: {}, Multiplicateur: {}, Final: {}",
             pokemon.species.name, level, bucket, baseAmount, rarityMultiplier, finalReward
         )
         
@@ -405,7 +405,7 @@ object CaptureListener {
         
         if (bucket != null) {
             GainCobbleDollardCapture.LOGGER.debug(
-                "[Gain-cobbledollard] Bucket trouvé pour {} (#{}) : {}",
+                "[CatchDollars] Bucket trouvé pour {} (#{}) : {}",
                 pokemon.species.name, nationalDex, bucket
             )
             return bucket
@@ -413,7 +413,7 @@ object CaptureListener {
         
         // Fallback: utiliser le catch rate comme approximation
         GainCobbleDollardCapture.LOGGER.warn(
-            "[Gain-cobbledollard] Bucket non trouvé pour {} (#{}), utilisation du catch rate",
+            "[CatchDollars] Bucket non trouvé pour {} (#{}), utilisation du catch rate",
             pokemon.species.name, nationalDex
         )
         
@@ -428,7 +428,7 @@ object CaptureListener {
     
     private fun initializeBucketCache() {
         try {
-            GainCobbleDollardCapture.LOGGER.info("[Gain-cobbledollard] Chargement du fichier pokemon_buckets.json...")
+            GainCobbleDollardCapture.LOGGER.info("[CatchDollars] Chargement du fichier pokemon_buckets.json...")
             
             // Lire le JSON depuis les resources
             val jsonStream = javaClass.classLoader.getResourceAsStream("pokemon_buckets.json")
@@ -449,17 +449,17 @@ object CaptureListener {
                 }
                 
                 GainCobbleDollardCapture.LOGGER.info(
-                    "[Gain-cobbledollard] Cache chargé: {} Pokémon avec leurs raretés",
+                    "[CatchDollars] Cache chargé: {} Pokémon avec leurs raretés",
                     pokemonBucketCache.size
                 )
             } else {
-                GainCobbleDollardCapture.LOGGER.error("[Gain-cobbledollard] Fichier pokemon_buckets.json introuvable dans les resources!")
+                GainCobbleDollardCapture.LOGGER.error("[CatchDollars] Fichier pokemon_buckets.json introuvable dans les resources!")
             }
             
             cacheInitialized = true
             
         } catch (e: Exception) {
-            GainCobbleDollardCapture.LOGGER.error("[Gain-cobbledollard] Erreur chargement cache: {}", e.message)
+            GainCobbleDollardCapture.LOGGER.error("[CatchDollars] Erreur chargement cache: {}", e.message)
             e.printStackTrace()
             cacheInitialized = true
         }

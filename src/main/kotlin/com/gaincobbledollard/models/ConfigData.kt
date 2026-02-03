@@ -34,11 +34,13 @@ data class ConfigData(
     val baseVictoryLevelMultiplier: Double = 50.0,
 
     // Language settings
-    val language: String = "fr", // "fr" ou "en"
+    val language: String = "en", // "fr" ou "en"
     
     // Display settings
     val showCaptureTitle: Boolean = true,
     val showPokedexTitle: Boolean = true,
     val showCaptureChat: Boolean = true,
-    val showPokedexChat: Boolean = true
+    val showPokedexChat: Boolean = true,
+    val showVictoryTitle: Boolean = true,
+    val showVictoryChat: Boolean = true
 )

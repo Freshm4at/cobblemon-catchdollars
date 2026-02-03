@@ -9,7 +9,7 @@ import java.io.FileWriter
 
 object Config {
     private val GSON = GsonBuilder().setPrettyPrinting().create()
-    private val CONFIG_FILE = File("config/gain-cobbledollard-capture.json")
+    private val CONFIG_FILE = File("config/cobblemon-catchdollars.json")
     var properties = ConfigData()
     
     // Base rewards for capture
@@ -45,7 +45,7 @@ object Config {
     var baseVictoryLevelMultiplier = 50.0
     
     // Language settings
-    var language = "fr" // "fr" ou "en"
+    var language = "en" // "fr" ou "en"
 
     // Predefined messages by language
     private val messages = mapOf(
@@ -79,6 +79,8 @@ object Config {
     var showPokedexTitle = true
     var showCaptureChat = true
     var showPokedexChat = true
+    var showVictoryTitle = true
+    var showVictoryChat = true
     
     fun load() {
         if (!CONFIG_FILE.exists()) {
@@ -132,6 +134,8 @@ object Config {
                     showPokedexTitle = it.showPokedexTitle
                     showCaptureChat = it.showCaptureChat
                     showPokedexChat = it.showPokedexChat
+                    showVictoryTitle = it.showVictoryTitle
+                    showVictoryChat = it.showVictoryChat
                 }
             }
             
@@ -184,7 +188,9 @@ object Config {
             showCaptureTitle = showCaptureTitle,
             showPokedexTitle = showPokedexTitle,
             showCaptureChat = showCaptureChat,
-            showPokedexChat = showPokedexChat
+            showPokedexChat = showPokedexChat,
+            showVictoryTitle = showVictoryTitle,
+            showVictoryChat = showVictoryChat
         )
         
         try {

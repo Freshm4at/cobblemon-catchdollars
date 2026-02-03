@@ -106,12 +106,12 @@ object CaptureListener {
                 val message = try {
                     String.format(
                         Config.getMessage("capture"),
-                        pokemon.species.name,
+                        pokemon.species.translatedName.string,
                         rewardInt
                     )
                 } catch (e: Exception) {
                     // Fallback si le format est incorrect
-                    "§6Vous avez capturé ${pokemon.species.name} et gagné $rewardInt CobbleDollards!"
+                    "§6Vous avez capturé ${pokemon.species.translatedName.string} et gagné $rewardInt CobbleDollards!"
                 }
                 player.sendMessage(
                     Text.literal(message).formatted(Formatting.GOLD),
@@ -119,37 +119,39 @@ object CaptureListener {
                 )
             }
             
-            // Afficher un titre au centre de l'écran
-            val title = Text.literal("")
-                .append(Text.literal(pokemon.species.name).formatted(rarityColor, Formatting.BOLD))
-            
-            // Ajouter "✨ Shiny" si le Pokémon est shiny
-            if (pokemon.shiny) {
-                title.append(Text.literal(" ✨ Shiny").formatted(Formatting.GOLD, Formatting.ITALIC))
-            }
-            
-            title.append(Text.literal(" lvl${pokemon.level} ${Config.getMessage("captured")}").formatted(Formatting.GRAY))
-            
-            val subtitle = Text.literal("+$rewardInt CobbleDollards")
-                .formatted(Formatting.YELLOW)
-            
-            // Utiliser le TitleQueueManager pour éviter les chevauchements
-            TitleQueueManager.sendTitle(
-                player,
-                TitleQueueManager.TitleData(
-                    title = title,
-                    subtitle = subtitle,
-                    fadeIn = 10,
-                    stay = 70,
-                    fadeOut = 20,
-                    priority = 5  // Priorité normale pour les captures
+            if(Config.showCaptureTitle) {
+                // Afficher un titre au centre de l'écran
+                val title = Text.literal("")
+                    .append(Text.literal(pokemon.species.translatedName.string).formatted(rarityColor, Formatting.BOLD))
+                
+                // Ajouter "✨ Shiny" si le Pokémon est shiny
+                if (pokemon.shiny) {
+                    title.append(Text.literal(" ✨ Shiny").formatted(Formatting.GOLD, Formatting.ITALIC))
+                }
+                
+                title.append(Text.literal(" lvl${pokemon.level} ${Config.getMessage("captured")}").formatted(Formatting.GRAY))
+                
+                val subtitle = Text.literal("+$rewardInt CobbleDollards")
+                    .formatted(Formatting.YELLOW)
+                
+                // Utiliser le TitleQueueManager pour éviter les chevauchements
+                TitleQueueManager.sendTitle(
+                    player,
+                    TitleQueueManager.TitleData(
+                        title = title,
+                        subtitle = subtitle,
+                        fadeIn = 10,
+                        stay = 70,
+                        fadeOut = 20,
+                        priority = 5  // Priorité normale pour les captures
+                    )
                 )
-            )
+            }
             
             GainCobbleDollardCapture.LOGGER.info(
                 "{} a capturé {} (Niveau {}) et a gagné {} CobbleDollards",
                 player.name.string,
-                pokemon.species.name,
+                pokemon.species.translatedName.string,
                 pokemon.level,
                 rewardInt
             )
@@ -180,16 +182,16 @@ object CaptureListener {
             RewardHandler.giveReward(player, reward)
             
             // Message au joueur dans le chat
-            if (Config.showCaptureChat) {
+            if (Config.showVictoryChat) {
                 val message = try {
                     String.format(
                         Config.getMessage("victory"),
-                        pokemon.species.name,
+                        pokemon.species.translatedName.string,
                         rewardInt
                     )
                 } catch (e: Exception) {
                     // Fallback si le format est incorrect
-                    "§6Vous avez vaincu ${pokemon.species.name} et gagné $rewardInt CobbleDollards!"
+                    "§6Vous avez vaincu ${pokemon.species.translatedName.string} et gagné $rewardInt CobbleDollards!"
                 }
                 player.sendMessage(
                     Text.literal(message).formatted(Formatting.GOLD),
@@ -197,37 +199,40 @@ object CaptureListener {
                 )
             }
             
-            // Afficher un titre au centre de l'écran
-            val title = Text.literal("")
-                .append(Text.literal(pokemon.species.name).formatted(rarityColor, Formatting.BOLD))
-            
-            // Ajouter "✨ Shiny" si le Pokémon est shiny
-            if (pokemon.shiny) {
-                title.append(Text.literal(" ✨ Shiny").formatted(Formatting.GOLD, Formatting.ITALIC))
+            if(Config.showVictoryTitle) {
+                // Afficher un titre au centre de l'écran
+                val title = Text.literal("")
+                    .append(Text.literal(pokemon.species.translatedName.string).formatted(rarityColor, Formatting.BOLD))
+                
+                // Ajouter "✨ Shiny" si le Pokémon est shiny
+                if (pokemon.shiny) {
+                    title.append(Text.literal(" ✨ Shiny").formatted(Formatting.GOLD, Formatting.ITALIC))
+                }
+                
+                title.append(Text.literal(" lvl${pokemon.level} ${Config.getMessage("defeated")}").formatted(Formatting.GRAY))
+                
+                val subtitle = Text.literal("+$rewardInt CobbleDollards")
+                    .formatted(Formatting.YELLOW)
+                
+                // Utiliser le TitleQueueManager pour éviter les chevauchements
+                TitleQueueManager.sendTitle(
+                    player,
+                    TitleQueueManager.TitleData(
+                        title = title,
+                        subtitle = subtitle,
+                        fadeIn = 10,
+                        stay = 70,
+                        fadeOut = 20,
+                        priority = 5  // Priorité normale pour les captures
+                    )
+                )
             }
             
-            title.append(Text.literal(" lvl${pokemon.level} ${Config.getMessage("defeated")}").formatted(Formatting.GRAY))
-            
-            val subtitle = Text.literal("+$rewardInt CobbleDollards")
-                .formatted(Formatting.YELLOW)
-            
-            // Utiliser le TitleQueueManager pour éviter les chevauchements
-            TitleQueueManager.sendTitle(
-                player,
-                TitleQueueManager.TitleData(
-                    title = title,
-                    subtitle = subtitle,
-                    fadeIn = 10,
-                    stay = 70,
-                    fadeOut = 20,
-                    priority = 5  // Priorité normale pour les captures
-                )
-            )
             
             GainCobbleDollardCapture.LOGGER.info(
                 "{} a vaincu {} (Niveau {}) et a gagné {} CobbleDollards",
                 player.name.string,
-                pokemon.species.name,
+                pokemon.species.translatedName.string,
                 pokemon.level,
                 rewardInt
             )
@@ -269,12 +274,12 @@ object CaptureListener {
                 val message = try {
                     String.format(
                         Config.getMessage("pokedex"),
-                        pokemon.species.name,
+                        pokemon.species.translatedName.string,
                         rewardInt
                     )
                 } catch (e: Exception) {
                     // Fallback si le format est incorrect
-                    "§6Vous avez ajouté ${pokemon.species.name} au pokédex et gagné $rewardInt CobbleDollards!"
+                    "§6Vous avez ajouté ${pokemon.species.translatedName.string} au pokédex et gagné $rewardInt CobbleDollards!"
                 }
                 player.sendMessage(
                     Text.literal(message).formatted(Formatting.GOLD),
@@ -284,7 +289,7 @@ object CaptureListener {
             // Afficher un titre au centre de l'écran
             if (Config.showPokedexTitle) {
                 val title = Text.literal("")
-                    .append(Text.literal(pokemon.species.name).formatted(rarityColor, Formatting.BOLD))
+                    .append(Text.literal(pokemon.species.translatedName.string).formatted(rarityColor, Formatting.BOLD))
                 
                 title.append(Text.literal(" ${Config.getMessage("addedToPokedex")}").formatted(Formatting.GRAY))
                 
@@ -308,7 +313,7 @@ object CaptureListener {
             GainCobbleDollardCapture.LOGGER.info(
                 "{} a ajouté au pokédex: {} et a gagné {} CobbleDollards",
                 player.name.string,
-                pokemon.species.name,
+                pokemon.species.translatedName.string,
                 rewardInt
             )
         }
@@ -335,7 +340,7 @@ object CaptureListener {
         
         GainCobbleDollardCapture.LOGGER.debug(
             "[CatchDollars] Calcul récompense - Pokemon: {}, Niveau: {}, Bucket: {}, Base: {}, Multiplicateur: {}, Final: {}",
-            pokemon.species.name, level, bucket, baseAmount, rarityMultiplier, finalReward
+            pokemon.species.translatedName.string, level, bucket, baseAmount, rarityMultiplier, finalReward
         )
         
         return finalReward
@@ -406,7 +411,7 @@ object CaptureListener {
         if (bucket != null) {
             GainCobbleDollardCapture.LOGGER.debug(
                 "[CatchDollars] Bucket trouvé pour {} (#{}) : {}",
-                pokemon.species.name, nationalDex, bucket
+                pokemon.species.translatedName.string, nationalDex, bucket
             )
             return bucket
         }
@@ -414,7 +419,7 @@ object CaptureListener {
         // Fallback: utiliser le catch rate comme approximation
         GainCobbleDollardCapture.LOGGER.warn(
             "[CatchDollars] Bucket non trouvé pour {} (#{}), utilisation du catch rate",
-            pokemon.species.name, nationalDex
+            pokemon.species.translatedName.string, nationalDex
         )
         
         val catchRate = pokemon.species.catchRate

@@ -28,7 +28,7 @@ Un mod Minecraft Fabric qui récompense les joueurs avec des CobbleDollards lors
 
 ## Configuration
 
-Le fichier de configuration se trouve dans `config/gain-cobbledollard-capture.json`
+Le fichier de configuration se trouve dans `config/cobblemon-catchdollars.json`
 
 ### Paramètres par défaut
 
